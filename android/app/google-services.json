@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1024403935861",
+    "project_id": "heychat-88a51",
+    "storage_bucket": "heychat-88a51.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024403935861:android:8e753e325d937a1b821e3c",
+        "android_client_info": {
+          "package_name": "com.heygrupos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024403935861-jmnor2tjeh3mlob8uessmrg60e45mij4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP9mnV63vQ8LzIAuC72aVogrgP3t2OD14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024403935861-jmnor2tjeh3mlob8uessmrg60e45mij4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
