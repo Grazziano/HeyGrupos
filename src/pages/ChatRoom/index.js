@@ -2,10 +2,9 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   SafeAreaView,
   TouchableOpacity,
-  FlatList,
+  Modal,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -14,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import FabButton from '../../components/FabButton';
+import ModalNewRoom from '../../components/ModalNewRoom';
 
 export default function ChatRoom() {
   const navigation = useNavigation();
@@ -47,6 +47,10 @@ export default function ChatRoom() {
       </View>
 
       <FabButton setVisible={() => setModalVisible(true)} />
+
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <ModalNewRoom setVisible={() => setModalVisible(false)} />
+      </Modal>
     </SafeAreaView>
   );
 }
