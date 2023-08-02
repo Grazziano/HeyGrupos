@@ -7,14 +7,18 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import FabButton from '../../components/FabButton';
+
 export default function ChatRoom() {
   const navigation = useNavigation();
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   function handleSignOut() {
     auth()
@@ -41,6 +45,8 @@ export default function ChatRoom() {
           <MaterialIcons name="search" size={28} color="#FFF" />
         </TouchableOpacity>
       </View>
+
+      <FabButton setVisible={() => setModalVisible(true)} />
     </SafeAreaView>
   );
 }
