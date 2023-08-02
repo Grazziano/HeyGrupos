@@ -8,11 +8,57 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
+
 export default function SignIn() {
+  const navigation = useNavigation();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [type, setType] = useState(false); // false > Tela Login | true > cadastro
+
+  function handleLogin() {
+    if (type) {
+      // Cadastrar um novo usuário
+      if (name === '' || email === '' || password === '') return;
+
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          user.user
+            .updateProfile({
+              displayName: name,
+            })
+            .then(() => {
+              navigation.goBack();
+            });
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+        });
+    } else {
+      // Logar o usuário
+
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch(error => {
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+        });
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,13 +89,15 @@ export default function SignIn() {
         onChangeText={text => setPassword(text)}
         placeholder="Sua senha"
         placeholderTextColor="#99999B"
+        secureTextEntry={true}
       />
 
       <TouchableOpacity
         style={[
           styles.buttonLogin,
           {backgroundColor: type ? '#F53745' : '#57DD86'},
-        ]}>
+        ]}
+        onPress={handleLogin}>
         <Text style={styles.buttonText}>{type ? 'Cadastrar' : 'Acessar'}</Text>
       </TouchableOpacity>
 
