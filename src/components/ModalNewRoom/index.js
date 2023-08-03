@@ -8,8 +8,48 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 export default function ModalNewRoom({setVisible}) {
   const [roomName, setRoomName] = useState('');
+
+  const user = auth().currentUser.toJSON();
+
+  function handleButtonCreate() {
+    if (roomName === '') return;
+
+    createRoom();
+  }
+
+  // criar nova sala no firestore
+  function createRoom() {
+    firestore()
+      .collection('MESSAGE_THREADS')
+      .add({
+        name: roomName,
+        owner: user.uid,
+        lastMessage: {
+          text: `Grupo ${roomName} criado. Bem vindo(a)!`,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+        },
+      })
+      .then(docRef => {
+        docRef
+          .collection('MESSAGES')
+          .add({
+            text: `Grupo ${roomName} criado. Bem vindo(a)!`,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+            system: true,
+          })
+          .then(() => {
+            setVisible();
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -26,8 +66,14 @@ export default function ModalNewRoom({setVisible}) {
           style={styles.input}
         />
 
-        <TouchableOpacity style={styles.buttonCreate}>
+        <TouchableOpacity
+          style={styles.buttonCreate}
+          onPress={handleButtonCreate}>
           <Text style={styles.buttonText}>Criar sala</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.backButton} onPress={setVisible}>
+          <Text>Voltar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -72,5 +118,10 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: 'bold',
     color: '#FFF',
+  },
+  backButton: {
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
