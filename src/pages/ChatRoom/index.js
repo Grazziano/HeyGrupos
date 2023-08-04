@@ -34,7 +34,7 @@ export default function ChatRoom() {
 
   useEffect(() => {
     const hasUser = auth().currentUser ? auth().currentUser.toJSON() : null;
-    console.log(hasUser);
+    // console.log(hasUser);
     setUser(hasUser);
   }, [isFocused]);
 
@@ -136,6 +136,7 @@ export default function ChatRoom() {
           <ChatList
             data={item}
             deleteRoom={() => deleteRoom(item.owner, item._id)}
+            userStatus={user}
           />
         )}
       />
