@@ -60,7 +60,7 @@ export default function ChatRoom() {
           if (isActive) {
             setThreads(threads);
             setLoading(false);
-            console.log(threads);
+            // console.log(threads);
           }
         });
     }
