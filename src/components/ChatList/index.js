@@ -1,9 +1,9 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-export default function ChatList({data}) {
+export default function ChatList({data, deleteRoom}) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => {}} onLongPress={deleteRoom}>
       <View style={styles.row}>
         <View style={styles.content}>
           <View style={styles.header}>
